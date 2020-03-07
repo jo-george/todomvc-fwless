@@ -12,6 +12,9 @@ class TodoApp extends HTMLElement {
 
     template() {
         return html`
+            <style>
+                @import "../node_modules/todomvc-app-css/index.css";
+            </style>
             <section class="todoapp">
                 <header class="header">
                     <h1>todos</h1>
