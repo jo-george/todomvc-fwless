@@ -1,11 +1,20 @@
-import {html, render} from 'https://unpkg.com/lit-html?module';
+import {html, render} from '../node_modules/lit-html/lit-html.js';
+import reducer from './store/reducer.js';
+
+const store = window.Redux.createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 class TodoApp extends HTMLElement {
+    
     constructor() {
         super();
         this._shadowRoot = this.attachShadow({ 'mode': 'open' });
 
-        render(this.template(), this._shadowRoot, {eventContext: this});
+        document.addEventListener('DOMContentLoaded', () => {
+            render(this.template(), this._shadowRoot, {eventContext: this});
+        });
 
         this.$input = this._shadowRoot.querySelector('input');
     }
