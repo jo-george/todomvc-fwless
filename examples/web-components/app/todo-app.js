@@ -1,5 +1,6 @@
-import {html, render} from '../node_modules/lit-html/lit-html.js';
+import {html, render} from 'lit-html';
 import reducer from './store/reducer.js';
+import {addItem} from './store/actions';
 
 const store = window.Redux.createStore(
     reducer,
@@ -16,7 +17,11 @@ class TodoApp extends HTMLElement {
             render(this.template(), this._shadowRoot, {eventContext: this});
         });
 
+        this.$todoList = this._shadowRoot.querySelector('.todo-list');
         this.$input = this._shadowRoot.querySelector('input');
+        this.$newTodo = this._shadowRoot.querySelector('.new-todo');
+
+        bindAddItem();
     }
 
     template() {
@@ -32,7 +37,17 @@ class TodoApp extends HTMLElement {
                 <section style="display:none" class="main">
                     <input id="toggle-all" class="toggle-all" type="checkbox">
                     <label for="toggle-all">Mark all as complete</label>
-                    <ul class="todo-list"></ul>
+                    <ul id="todo-list">
+                        ${this.itrems.map((item, index) => html`
+                            <to-do-item 
+                                ?checked=${item.checked}
+                                .index=${index}
+                                text=${item.text}
+                                @onRemove=${this._removeItem}
+                                @onToggle=${this._toggleItem}>    
+                            </to-do-item>
+                        `)}
+                    </ul>
                     <footer class="footer">
                         <span class="todo-count"></span>
                         <ul class="filters">
@@ -52,6 +67,15 @@ class TodoApp extends HTMLElement {
             </section>
         `;
     }
+
+    bindAddItem() {
+		$on(this.$newTodo, 'change', ({target}) => {
+			const description = target.value.trim();
+			if (description) {
+				store.dispatch(addItem(description));
+			}
+		});
+	}
 }
 
 window.customElements.define('todo-app', TodoApp);
