@@ -1,5 +1,6 @@
 export const ADD_ITEM = 'ADD_ITEM';
 export const TOGGLE_ITEM = 'TOGGLE_ITEM';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const REMOVE_ALL_COMPLETED = 'REMOVE_ALL_COMPLETED';
 
 export const addItem = (description) => {
@@ -12,9 +13,16 @@ export const addItem = (description) => {
 export function toggleItem(index) {
     return {
         type: TOGGLE_ITEM,
-        index 
+        index
     };
-  };
+};
+
+export function removeItem(index) {
+    return {
+        type: REMOVE_ITEM,
+        index
+    };
+};
 
 export const removeAllCompleted = () => {
     return {

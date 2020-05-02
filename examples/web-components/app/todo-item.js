@@ -1,4 +1,4 @@
-import { html, render } from 'lit-html';
+import { html, render } from '../node_modules/lit-html/lit-html.js';
 
 export const escapeForHTML = s => s.replace(/[&<]/g, c => c === '&' ? '&amp;' : '&lt;');
 
@@ -16,11 +16,11 @@ class TodoItem extends HTMLElement {
         render(this.template(), this._shadowRoot, {eventContext: this});
     }
 
-    _fireToggle(e) {
+    fireToggle(e) {
         this.dispatchEvent(new CustomEvent('onToggle', { detail: this.index }));
     }
 
-    _fireRemove(e) {
+    fireRemove(e) {
         this.dispatchEvent(new CustomEvent('onRemove', { detail: this.index }));
     }
 
@@ -31,11 +31,13 @@ class TodoItem extends HTMLElement {
             </style>
             <li ${this._checked ? ' class="completed"' : ''}>
                 <div class="view">
-                    <input class="toggle" type="checkbox" .checked=${this._checked} @change=${this._fireToggle}>
+                    <input class="toggle" type="checkbox" .checked=${this._checked} @change=${this.fireToggle}>
                     <label>${escapeForHTML(item.title)}</label>
-                    <button class="destroy" @click=${this._fireRemove}></button>
+                    <button class="destroy" @click=${this.fireRemove}></button>
                 </div>
             </li>
         `;
     }
 }
+
+window.customElements.define('todo-item', TodoItem);

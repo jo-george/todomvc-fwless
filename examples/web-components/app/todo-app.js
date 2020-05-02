@@ -1,6 +1,7 @@
-import {html, render} from 'lit-html';
+import { html, render } from '../node_modules/lit-html/lit-html.js';
 import reducer from './store/reducer.js';
-import {addItem} from './store/actions';
+import { addItem, toggleItem, removeItem, removeAllCompleted } from './store/actions.js';
+import './todo-item.js';
 
 const store = window.Redux.createStore(
     reducer,
@@ -38,14 +39,14 @@ class TodoApp extends HTMLElement {
                     <input id="toggle-all" class="toggle-all" type="checkbox">
                     <label for="toggle-all">Mark all as complete</label>
                     <ul id="todo-list">
-                        ${this.itrems.map((item, index) => html`
-                            <to-do-item 
+                        ${store.getState().items.map((item, index) => html`
+                            <todo-item 
                                 ?checked=${item.checked}
                                 .index=${index}
                                 text=${item.text}
-                                @onRemove=${this._removeItem}
-                                @onToggle=${this._toggleItem}>    
-                            </to-do-item>
+                                @onRemove=${this.removeItem}
+                                @onToggle=${this.toggleItem}>    
+                            </todo-item>
                         `)}
                     </ul>
                     <footer class="footer">
@@ -61,7 +62,7 @@ class TodoApp extends HTMLElement {
                             <a href="#/completed">Completed</a>
                             </li>
                         </ul>
-                        <button class="clear-completed">Clear completed</button>
+                        <button class="clear-completed" @click=${this.removeAllCompleted}>Clear completed</button>
                     </footer>
 			    </section>
             </section>
@@ -75,7 +76,19 @@ class TodoApp extends HTMLElement {
 				store.dispatch(addItem(description));
 			}
 		});
-	}
+    }
+
+    toggleItem() {
+        store.dispatch(toggleItem(target.index));
+    }
+
+    removeItem() {
+        store.dispatch(removeItem(target.index));
+    }
+
+    removeAllCompleted() {
+        store.dispatch(removeAllCompleted());
+    }
 }
 
 window.customElements.define('todo-app', TodoApp);
