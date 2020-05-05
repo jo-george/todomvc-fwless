@@ -6,7 +6,12 @@ import {
 } from './actions.js';
 
 const initialState = {
-    items: []
+    items: [
+        { description: 'Display items from initial state', completed: false },
+        { description: 'Fix add item logic', completed: false },
+        { description: 'Test remove, toggle and filter item logic', completed: false },
+        { description: 'Change initial state to empty', completed: false }
+    ]
 };
 
 const reducer = (state=initialState, action) => {

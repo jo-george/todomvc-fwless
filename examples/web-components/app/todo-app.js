@@ -17,12 +17,6 @@ class TodoApp extends HTMLElement {
         document.addEventListener('DOMContentLoaded', () => {
             render(this.template(), this._shadowRoot, {eventContext: this});
         });
-
-        this.$todoList = this._shadowRoot.querySelector('.todo-list');
-        this.$input = this._shadowRoot.querySelector('input');
-        this.$newTodo = this._shadowRoot.querySelector('.new-todo');
-
-        bindAddItem();
     }
 
     template() {
@@ -33,7 +27,7 @@ class TodoApp extends HTMLElement {
             <section class="todoapp">
                 <header class="header">
                     <h1>todos</h1>
-                    <input class="new-todo" placeholder="What needs to be done?" autofocus>
+                    <input class="new-todo" placeholder="What needs to be done?" @change=${this.addItem} autofocus>
                 </header>
                 <section style="display:none" class="main">
                     <input id="toggle-all" class="toggle-all" type="checkbox">
@@ -41,9 +35,9 @@ class TodoApp extends HTMLElement {
                     <ul id="todo-list">
                         ${store.getState().items.map((item, index) => html`
                             <todo-item 
-                                ?checked=${item.checked}
+                                ?checked=${item.completed}
                                 .index=${index}
-                                text=${item.text}
+                                text=${item.description}
                                 @onRemove=${this.removeItem}
                                 @onToggle=${this.toggleItem}>    
                             </todo-item>
@@ -69,21 +63,20 @@ class TodoApp extends HTMLElement {
         `;
     }
 
-    bindAddItem() {
-		$on(this.$newTodo, 'change', ({target}) => {
-			const description = target.value.trim();
-			if (description) {
-				store.dispatch(addItem(description));
-			}
-		});
+    addItem(e) {
+        const description = e.target.value.trim();
+        if (description) {
+            store.dispatch(addItem(description));
+            e.target.value = '';
+        }
     }
 
-    toggleItem() {
-        store.dispatch(toggleItem(target.index));
+    toggleItem(e) {
+        store.dispatch(toggleItem(e.target.index));
     }
 
-    removeItem() {
-        store.dispatch(removeItem(target.index));
+    removeItem(e) {
+        store.dispatch(removeItem(e.target.index));
     }
 
     removeAllCompleted() {
