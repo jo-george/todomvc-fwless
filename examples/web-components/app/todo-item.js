@@ -29,14 +29,14 @@ class TodoItem extends HTMLElement {
             <style>
                 @import "../node_modules/todomvc-app-css/index.css";
             </style>
-            <li ${this.checked ? ' class="completed"' : ''}>
+            <li class=${this.checked ? 'completed' : ''}>
                 <div class="view">
                     <input 
-                        type="checkbox"
                         class="toggle"
+                        type="checkbox"
                         .checked=${this.checked}
                         @change=${this.fireToggle}>
-                    <label class=${this.checked ? 'completed' : ''}>${this.text}</label>
+                    <label>${this.text}</label>
                     <button class="destroy" @click=${this.fireRemove}></button>
                 </div>
             </li>
@@ -59,7 +59,7 @@ class TodoItem extends HTMLElement {
             //    this.index = parseInt(newValue);
             //    break;
         }
-        render(this.template(), this._shadowRoot, {eventContext: this});
+        // render(this.template(), this._shadowRoot, {eventContext: this});
     }
 
     set index(idx) {
