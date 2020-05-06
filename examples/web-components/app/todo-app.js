@@ -58,8 +58,11 @@ class TodoApp extends HTMLElement {
                         </ul>
                         <button class="clear-completed" @click=${this.removeAllCompleted}>Clear completed</button>
                     </footer>
-			    </section>
+                </section>
             </section>
+            <footer class="info">
+			    <p>Double-click to edit a todo</p>
+		    </footer>
         `;
     }
 
