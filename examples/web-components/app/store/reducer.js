@@ -7,9 +7,12 @@ import {
 
 const initialState = {
     items: [
-        { description: 'Display items from initial state', completed: false },
-        { description: 'Fix add item logic', completed: false },
-        { description: 'Test remove, toggle and filter item logic', completed: false },
+        { description: 'Display items from initial state', completed: true },
+        { description: 'Fix add item logic', completed: true },
+        { description: 'Display newly added items', completed: false },
+        { description: 'Make TodoItem components truly immutable', completed: false },
+        { description: 'Fix display style for completed items and item list (no bullets)', completed: false },
+        { description: 'Adapt remove, toggle and filter item logic', completed: false },
         { description: 'Change initial state to empty', completed: false }
     ]
 };

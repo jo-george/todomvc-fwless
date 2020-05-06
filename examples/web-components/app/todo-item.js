@@ -48,18 +48,9 @@ class TodoItem extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        switch(name){
-            case 'text':
-                this.text = newValue;
-                break;
-            case 'checked':
-                this.checked = this.hasAttribute('checked');
-                break;
-            // case 'index':
-            //    this.index = parseInt(newValue);
-            //    break;
+        if (name == 'text') {
+            this.text = newValue;
         }
-        // render(this.template(), this._shadowRoot, {eventContext: this});
     }
 
     set index(idx) {

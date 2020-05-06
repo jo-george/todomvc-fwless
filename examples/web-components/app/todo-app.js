@@ -29,7 +29,7 @@ class TodoApp extends HTMLElement {
                     <h1>todos</h1>
                     <input class="new-todo" placeholder="What needs to be done?" @change=${this.addItem} autofocus>
                 </header>
-                <section style="display:none" class="main">
+                <section class="main">
                     <input id="toggle-all" class="toggle-all" type="checkbox">
                     <label for="toggle-all">Mark all as complete</label>
                     <ul id="todo-list">
